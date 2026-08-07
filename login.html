@@ -70,14 +70,24 @@
     <script>
         const loginForm = document.getElementById('loginForm');
         const loginMessage = document.getElementById('loginMessage');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('username')) {
+            usernameInput.value = urlParams.get('username');
+        }
+        if (urlParams.has('password')) {
+            passwordInput.value = urlParams.get('password');
+        }
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             loginMessage.textContent = '';
 
             const payload = {
-                username: document.getElementById('username').value,
-                password: document.getElementById('password').value
+                username: usernameInput.value,
+                password: passwordInput.value
             };
 
             try {

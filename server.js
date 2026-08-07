@@ -46,7 +46,14 @@ const upload = multer({ storage: storage });
 
 // Middleware
 app.use(helmet());
-app.use(cors({ origin: WEB_ORIGIN, credentials: true }));
+const allowedOrigins = [WEB_ORIGIN, 'http://localhost:3000'].filter(Boolean);
+app.use(cors({ origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+    } else {
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+    }
+}, credentials: true }));
 app.use(express.json());
 
 function parseCookies(req) {
