@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tak Cloth Store | Premium Curated Fashion in Kuchaman City</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        ⚡ Same-Day Delivery in Kuchaman City • Store Pickup Available
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="brand-logo">
+            <div class="brand-title">Tak</div>
+            <div class="brand-sub">Cloth Store</div>
+            <div class="brand-sub">Handpicked Fashion for the Modern Wardrobe.</div>
+            <div class="location-badge">📍 Kuchaman City</div>
+        </a>
+
+        <button class="mobile-menu-btn" id="menuToggle" aria-label="Toggle Menu">
+            ☰
+        </button>
+
+        <nav>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#arrivals">Collection</a></li>
+                <li><a href="#visit">Our Store</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Banner with Background Image Slider -->
+    <section class="hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide active" style="background-image: url('images/hero1.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('images/hero2.jpg');"></div>
+            <div class="hero-slide" style="background-image: url('images/hero3.jpg');"></div>
+        </div>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1>Refined Fashion, Sourced for Kuchaman</h1>
+            <p>Salwar Suits, Pure Cotton Odhani, Quality Astar, and Premium Thān Fabrics (Nilam, Jorjat, Jam Cotton & more).</p>
+            <div class="cta-group">
+                <a href="#arrivals" class="cta-button">Explore Collection</a>
+                <a href="https://wa.me/917023788508?text=Hi%20Tak%20Cloth%20Store,%20I'd%20like%20to%20inquire%20about%20your%20collection" target="_blank" class="whatsapp-button">Order via WhatsApp</a>
+            </div>
+        </div>
+
+        <button class="hero-btn hero-prev" onclick="changeHeroSlide(-1)">❮</button>
+        <button class="hero-btn hero-next" onclick="changeHeroSlide(1)">❯</button>
+    </section>
+
+    <!-- Product Showcase with Backend Filtering -->
+    <section class="products-section" id="arrivals">
+        <h2 class="section-title">Curated Essentials</h2>
+        <p class="section-subtitle">Select a category to filter stock dynamically from our inventory</p>
+        
+        <!-- Category Filter Bar -->
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" onclick="filterCategory('All', this)">All Items</button>
+            <button class="filter-btn" onclick="filterCategory('Salwar Suit', this)">Salwar Suits</button>
+            <button class="filter-btn" onclick="filterCategory('Odhani', this)">Odhani (ओढ़णी)</button>
+            <button class="filter-btn" onclick="filterCategory('Astar', this)">Astar (अस्तर)</button>
+            <button class="filter-btn" onclick="filterCategory('Raw Fabric (Thān)', this)">Thān Fabric (थान)</button>
+            <button class="filter-btn" onclick="filterCategory('Pant Shirt Fabric', this)">Pant Shirt (पैंत शर्ट)</button>
+        </div>
+
+        <!-- Product Grid Dynamic Display -->
+        <div class="product-grid" id="productGrid">
+            <p style="grid-column: 1/-1; text-align: center;">Loading collection from database...</p>
+        </div>
+    </section>
+
+    <!-- Local Store Section -->
+    <section class="local-info-section" id="visit">
+        <div class="about-container">
+            <h2>The Tak Curation</h2>
+            <p>At <strong>Tak Cloth Store</strong>, we act as Kuchaman City's personal style curators—handpicking premium fabrics, versatile cuts, and modern essentials.</p>
+            
+            <div class="local-features">
+                <div class="feature-box">
+                    <h4>🚀 Local Speed</h4>
+                    <p>Same-day delivery across Kuchaman City</p>
+                </div>
+                <div class="feature-box">
+                    <h4>✨ Quality Checked</h4>
+                    <p>Every piece thoroughly inspected</p>
+                </div>
+                <div class="feature-box">
+                    <h4>🔄 Easy Exchange</h4>
+                    <p>Hassle-free local exchange support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="brand-title footer-logo">Tak Cloth Store</div>
+                <p>Handpicked Fashion for the Modern Wardrobe.</p>
+                <p style="margin-top:10px;">📍 Near Homeopathy Hospital, Naya Sahar, Kuchaman City, Rajasthan</p>
+            </div>
+            <div class="footer-col">
+                <h4>Customer Support</h4>
+                <ul>
+                    <li><a href="#">Same-Day Delivery Details</a></li>
+                    <li><a href="#">Local Exchange Policy</a></li>
+                    <li><a href="#">Size & Fit Guide</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect With Us</h4>
+                <p>Phone / WhatsApp: +91 7023788508</p>
+                <p>Email: takclothstore@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Tak Cloth Store. Serving Kuchaman City & Beyond.
+        </div>
+    </footer>
+
+    <!-- External Script -->
+    <script src="script.js"></script>
+</body>
+</html>
