@@ -67,4 +67,17 @@ The app is ready for a free deployment if:
 - you set environment variables instead of hardcoding credentials
 - you accept that file storage may be temporary on a free plan
 
+## Git workflow
+
+Use a branch for each change:
+
+```bash
+git checkout -b feature/your-change
+git add .
+git commit -m "Describe your change"
+git push origin feature/your-change
+```
+
+Then open a pull request on GitHub and merge once reviewed.
+
 If you want, I can also add a GitHub repo setup guide for free deployment on Render or Railway.
