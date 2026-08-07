@@ -13,6 +13,8 @@ const PORT = parseInt(process.env.PORT || '3000', 10);
 const WEB_ORIGIN = process.env.WEB_ORIGIN || `http://localhost:${PORT}`;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const DATA_DIR = path.join(__dirname, 'data');
+const DB_PATH = path.join(DATA_DIR, 'inventory.db');
 const sessions = new Map();
 
 if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
@@ -20,8 +22,11 @@ if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
     process.exit(1);
 }
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, 'uploads');
+// Ensure data and uploads directories exist
+if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+}
+const uploadDir = path.join(DATA_DIR, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -110,7 +115,7 @@ app.use(express.static(__dirname));
 app.use('/uploads', express.static(uploadDir));
 
 // Database Initialization
-const db = new sqlite3.Database('./inventory.db', (err) => {
+const db = new sqlite3.Database(DB_PATH, (err) => {
     if (err) console.error('Error opening database:', err.message);
     else console.log('Connected to SQLite database.');
 });
@@ -148,6 +153,7 @@ app.post('/api/auth/login', (req, res) => {
 
         res.cookie('admin_session', token, {
             httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
             maxAge: 1000 * 60 * 60 * 8,
             path: '/',
