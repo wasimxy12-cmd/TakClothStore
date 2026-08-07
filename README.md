@@ -1,83 +1,40 @@
-# Tak Cloth Store (Minimal Website)
+# Tak Cloth Store
 
-This project includes:
-- a public storefront (`index.html`)
-- an admin panel (`admin.html`) with secure login
-- a Node.js backend (`server.js`) using SQLite and file uploads
+This storefront now uses a Vercel backend with Subspace inventory support.
 
-## Local setup
+## What is included
+- A public storefront in [index.html](index.html)
+- A Vercel serverless backend under [api/](api/)
+- Admin and login pages that are ready for future UI integration
+- Backend auth, product inventory, and upload logic with Subspace configuration
 
-1. Copy `.env.example` to `.env`
-2. Set your admin credentials and optional site origin:
-   ```env
-   ADMIN_USERNAME=admin
-   ADMIN_PASSWORD=your_secret_password
-   # Optional: set this if your app is hosted on a public URL.
-   WEB_ORIGIN=http://localhost:3000
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Start the app:
-   ```bash
-   npm start
-   ```
-5. Open in browser:
-   - `http://localhost:3000/login.html`
+## Backend endpoints
+- POST /api/auth — admin login, returns a bearer token
+- GET /api/auth — verify an existing token
+- GET /api/products — retrieve the current inventory
+- PUT /api/products — update inventory (requires auth)
+- POST /api/upload — upload assets to Subspace (requires auth)
 
-> If you deploy to a hosted URL, use the platform-provided subdomain instead.
+## Deployment
+1. Push the repository to GitHub.
+2. Create a Vercel project from this repo.
+3. Add environment variables in the Vercel project settings.
+4. Deploy.
 
-## Free deployment options
+## Environment configuration
+Copy .env.example to .env and set your own values.
 
-### Option 1: Render (recommended)
-1. Create a free Render account.
-2. Connect your GitHub repo.
-3. Create a new Web Service.
-4. Use:
-   - Build command: `npm install`
-   - Start command: `npm start`
-5. Add environment variables on Render:
-   - `ADMIN_USERNAME`
-   - `ADMIN_PASSWORD`
-   - `WEB_ORIGIN=https://<your-render-subdomain>.onrender.com`
-6. Deploy.
+Required variables:
 
-### Option 2: Railway
-1. Create a free Railway account.
-2. Deploy from GitHub repository.
-3. Set the same environment variables.
-4. Use `npm install` and `npm start`.
+- ADMIN_USERNAME
+- ADMIN_PASSWORD
+- AUTH_SECRET
+- WEB_ORIGIN
+- SUBSPACE_API_URL
+- SUBSPACE_API_KEY
+- SUBSPACE_INVENTORY_PATH
+- SUBSPACE_UPLOAD_PATH
 
-### Option 3: Fly.io
-1. Create a free Fly.io account.
-2. Deploy the app with Node support.
-3. Set env vars on Fly.
-
-## Important notes for free hosting
-
-- **No domain required**: free platforms give you a subdomain like `https://your-app.onrender.com`.
-- **Database and uploads may not persist** on free tiers with ephemeral disks. If you need stable storage, use a proper hosted database and object storage.
-- This project is fine for testing and small use, but for long-term public deployment you should eventually upgrade storage and HTTPS.
-
-## Production readiness
-
-The app is ready for a free deployment if:
-- you use a supported Node host
-- you set environment variables instead of hardcoding credentials
-- you accept that file storage may be temporary on a free plan
-
-## Git workflow
-
-Use a branch for each change:
-
-```bash
-git checkout -b feature/your-change
-git add .
-git commit -m "Describe your change"
-git push origin feature/your-change
-```
-
-Then open a pull request on GitHub and merge once reviewed.
-
-If you want, I can also add a GitHub repo setup guide for free deployment on Render or Railway.
+## Updating content
+- The storefront now fetches inventory from /api/products.
+- To change inventory, update Subspace data through PUT /api/products or extend the admin UI.
