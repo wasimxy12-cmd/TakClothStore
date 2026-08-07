@@ -1,4 +1,4 @@
-const { uploadAsset } = require('../lib/subspace');
+const { uploadAsset } = require('../lib/supabase');
 const { parseJsonBody, sendJson, getBearerToken } = require('../lib/utils');
 const { verifyToken } = require('../lib/auth');
 
