@@ -45,7 +45,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Middleware
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 const allowedOrigins = [WEB_ORIGIN, 'http://localhost:3000'].filter(Boolean);
 app.use(cors({ origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
