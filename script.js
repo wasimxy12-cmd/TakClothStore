@@ -1,188 +1,184 @@
-let currentHeroSlide = 0;
-let heroInterval;
-let currentCategory = 'All';
-
-const fallbackProducts = [
-    {
-        id: '1',
-        title: 'Pure Cotton Printed Odhani',
-        price: 1250,
-        category: 'Odhani',
-        brand: 'Tak Curation',
-        fabric_type: 'Cotton',
-        print_type: 'Bandhani',
-        badge: 'New Arrival',
-        images: ['/images/hero1.jpg']
-    },
-    {
-        id: '2',
-        title: 'Traditional Salwar Suit Set',
-        price: 2450,
-        category: 'Salwar Suit',
-        brand: 'Tak Signature',
-        fabric_type: 'Silk Blend',
-        print_type: 'Floral',
-        badge: 'Best Seller',
-        images: ['/images/hero2.jpg']
-    },
-    {
-        id: '3',
-        title: 'Handwoven Astar Fabric',
-        price: 1800,
-        category: 'Astar',
-        brand: 'Tak Weaves',
-        fabric_type: 'Handloom',
-        print_type: 'Classic',
-        badge: 'Limited',
-        images: ['/images/hero3.jpg']
-    },
-    {
-        id: '4',
-        title: 'Thān Fabric Premium Roll',
-        price: 3200,
-        category: 'Raw Fabric (Thān)',
-        brand: 'Tak Loom',
-        fabric_type: 'Khadi',
-        print_type: 'Plain',
-        badge: 'Premium',
-        images: ['/images/hero1.jpg']
-    }
-];
-
-let staticProducts = fallbackProducts;
-
 document.addEventListener('DOMContentLoaded', () => {
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
+    // 1. ADD THIS LINE HERE AT THE VERY TOP
+    const storeWhatsAppNumber = "917023788508"; // Replace with your WhatsApp number// 1. Combine products safely from category JS files
+    const allProducts = [
+        ...(typeof suitsProducts !== 'undefined' ? suitsProducts : []),
+        ...(typeof odhaniProducts !== 'undefined' ? odhaniProducts : []),
+        ...(typeof thanProducts !== 'undefined' ? thanProducts : []),
+        ...(typeof astarProducts !== 'undefined' ? astarProducts : [])
+    ];
 
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+    const productGrid = document.getElementById('productGrid');
+
+   // 2. Render Products Dynamically with WhatsApp Button
+    function renderProducts(productsToRender) {
+        if (!productGrid) return;
+
+        if (productsToRender.length === 0) {
+            productGrid.innerHTML = `<p style="grid-column: 1/-1; color: var(--text-muted);">No products found in this category.</p>`;
+            return;
+        }
+
+        productGrid.innerHTML = productsToRender.map(product => {
+            const hasMultipleImages = product.images && product.images.length > 1;
+            const isOutOfStock = product.inStock === false;
+
+            // Generate WhatsApp order message URL
+            const whatsappMessage = encodeURIComponent(
+                `Hello TAK Cloth Store! 👋\nI want to buy:\n\n📌 *Product:* ${product.title}\n🏷️ *Brand:* ${product.brand}\n💰 *Price:* ${product.price}\n🆔 *Product ID:* ${product.id}\n\nPlease let me know if it is available.`
+            );
+            const whatsappLink = `https://wa.me/${storeWhatsAppNumber}?text=${whatsappMessage}`;
+
+            return `
+                <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}" data-category="${product.category}">
+                    <div class="product-image-holder">
+                        ${product.badge ? `<span class="badge">${product.badge}</span>` : ''}
+                        ${isOutOfStock ? `<span class="badge out-badge">Out of Stock</span>` : ''}
+                        <div class="slider-track">
+                            ${product.images.map(img => `<img src="${img}" alt="${product.title}">`).join('')}
+                        </div>
+                        ${hasMultipleImages ? `
+                            <button class="slider-btn prev-btn">&#10094;</button>
+                            <button class="slider-btn next-btn">&#10095;</button>
+                        ` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-tags">
+                            ${product.tags.map(tag => `<span class="tag-badge">${tag}</span>`).join('')}
+                        </div>
+                        <div class="product-brand">${product.brand}</div>
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-price-wrapper">
+                            ${product.originalPrice ? `<span class="original-price">${product.originalPrice}</span>` : ''}
+                            <span class="product-price">${product.price}</span>
+                        </div>
+                        
+                        <!-- WhatsApp Direct Buy Button -->
+                        <a href="${isOutOfStock ? 'javascript:void(0)' : whatsappLink}" 
+                           target="${isOutOfStock ? '_self' : '_blank'}" 
+                           class="card-wa-btn ${isOutOfStock ? 'disabled-btn' : ''}">
+                           ${isOutOfStock ? 'Unavailable' : '💬 Buy on WhatsApp'}
+                        </a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        initMiniImageSliders();
+    }
+
+    // Initial render of all products
+    renderProducts(allProducts);
+
+    // 3. Category Filter Buttons Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            if (filterValue === 'all') {
+                renderProducts(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.category === filterValue);
+                renderProducts(filtered);
+            }
+        });
+    });
+
+    // 4. Product Card Mini Slider Controls
+    function initMiniImageSliders() {
+        document.querySelectorAll('.product-card').forEach(card => {
+            const track = card.querySelector('.slider-track');
+            const images = track ? track.querySelectorAll('img') : [];
+            const prevSlideBtn = card.querySelector('.prev-btn');
+            const nextSlideBtn = card.querySelector('.next-btn');
+
+            if (images.length > 1 && track) {
+                let imgIndex = 0;
+
+                const updateProductImage = () => {
+                    track.style.transform = `translateX(-${imgIndex * 100}%)`;
+                };
+
+                if (nextSlideBtn) {
+                    nextSlideBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        imgIndex = (imgIndex + 1) % images.length;
+                        updateProductImage();
+                    });
+                }
+
+                if (prevSlideBtn) {
+                    prevSlideBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        imgIndex = (imgIndex - 1 + images.length) % images.length;
+                        updateProductImage();
+                    });
+                }
+            }
         });
     }
 
-    startHeroAutoSlide();
-    loadProducts();
-});
+    // 5. Mobile Navigation Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
 
-async function loadProducts() {
-    const grid = document.getElementById('productGrid');
-    if (grid) {
-        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">Loading collection from backend...</p>`;
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
     }
 
-    try {
-        const response = await fetch('/api/products');
-        if (!response.ok) {
-            throw new Error('Failed to fetch product inventory');
-        }
-
-        const data = await response.json();
-        if (data && Array.isArray(data.inventory)) {
-            staticProducts = data.inventory;
-        } else {
-            throw new Error('Invalid inventory response');
-        }
-    } catch (error) {
-        console.warn('Unable to load backend inventory, falling back to static products:', error);
-        staticProducts = fallbackProducts;
-    }
-
-    renderProducts(currentCategory);
-}
-
-function showHeroSlide(index) {
+    // 6. Hero Slider Logic
     const slides = document.querySelectorAll('.hero-slide');
-    if (slides.length === 0) return;
+    const prevBtn = document.getElementById('heroPrevBtn');
+    const nextBtn = document.getElementById('heroNextBtn');
 
-    slides.forEach(slide => slide.classList.remove('active'));
+    if (slides.length > 0) {
+        let currentSlide = 0;
+        let autoSlideInterval;
 
-    if (index >= slides.length) currentHeroSlide = 0;
-    else if (index < 0) currentHeroSlide = slides.length - 1;
-    else currentHeroSlide = index;
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            currentSlide = (index + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
 
-    slides[currentHeroSlide].classList.add('active');
-}
+        function startAutoSlide() {
+            stopAutoSlide();
+            autoSlideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+        }
 
-function changeHeroSlide(direction) {
-    clearInterval(heroInterval);
-    showHeroSlide(currentHeroSlide + direction);
-    startHeroAutoSlide();
-}
+        function stopAutoSlide() {
+            if (autoSlideInterval) clearInterval(autoSlideInterval);
+        }
 
-function startHeroAutoSlide() {
-    heroInterval = setInterval(() => {
-        showHeroSlide(currentHeroSlide + 1);
-    }, 5000);
-}
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+                startAutoSlide();
+            });
+        }
 
-function getProducts(category) {
-    if (category === 'All') {
-        return staticProducts;
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+                startAutoSlide();
+            });
+        }
+
+        startAutoSlide();
     }
-
-    return staticProducts.filter(item => item.category === category);
-}
-
-function renderProducts(category) {
-    const grid = document.getElementById('productGrid');
-    const products = getProducts(category);
-
-    if (products.length === 0) {
-        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center;">No items found under "${category}".</p>`;
-        return;
-    }
-
-    grid.innerHTML = products.map(item => `
-        <div class="product-card">
-            <div class="product-image-holder">
-                ${item.badge ? `<span class="badge">${item.badge}</span>` : ''}
-                <div class="slider-track">
-                    ${item.images.map(imgSrc => `<img src="${imgSrc}" alt="${item.title}">`).join('')}
-                </div>
-                ${item.images.length > 1 ? `
-                    <button class="slider-btn prev-btn" onclick="moveSlide(this, -1)">❮</button>
-                    <button class="slider-btn next-btn" onclick="moveSlide(this, 1)">❯</button>
-                ` : ''}
-            </div>
-            <div class="product-info">
-                <span class="product-brand">${item.brand || 'Tak Curation'}</span>
-                <div class="product-tags">
-                    <span class="tag-badge">${item.category}</span>
-                    ${item.fabric_type ? `<span class="tag-badge">${item.fabric_type}</span>` : ''}
-                    ${item.print_type ? `<span class="tag-badge">${item.print_type}</span>` : ''}
-                </div>
-                <h3 class="product-title">${item.title}</h3>
-                <p class="product-price">₹${item.price}</p>
-            </div>
-        </div>
-    `).join('');
-}
-
-function filterCategory(cat, button) {
-    currentCategory = cat;
-
-    const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-
-    renderProducts(cat);
-}
-
-function moveSlide(button, direction) {
-    const holder = button.closest('.product-image-holder');
-    const track = holder.querySelector('.slider-track');
-    const totalImages = track.querySelectorAll('img').length;
-
-    let currentIndex = parseInt(track.dataset.currentIndex || '0');
-    currentIndex += direction;
-
-    if (currentIndex < 0) {
-        currentIndex = totalImages - 1;
-    } else if (currentIndex >= totalImages) {
-        currentIndex = 0;
-    }
-
-    track.dataset.currentIndex = currentIndex;
-    track.style.transform = `translateX(-${currentIndex * 100}%)`;
-}
+});

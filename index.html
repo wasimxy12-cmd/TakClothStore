@@ -3,107 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tak Cloth Store | Premium Curated Fashion in Kuchaman City</title>
-    
+    <title>TAK Cloth Store | Kuchaman City</title>
+    <link rel="stylesheet" href="styles.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- External CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-        ⚡ Same-Day Delivery in Kuchaman City • Store Pickup Available
+        ⚡ SAME-DAY DELIVERY IN KUCHAMAN CITY • STORE PICKUP AVAILABLE
     </div>
 
     <!-- Header -->
     <header class="header">
-        <a href="#" class="brand-logo">
-            <div class="brand-title">Tak</div>
+        <div class="brand-container">
+            <div class="brand-title">TAK</div>
             <div class="brand-sub">Cloth Store</div>
-            <div class="brand-sub">Handpicked Fashion for the Modern Wardrobe.</div>
-            <div class="location-badge">📍 Kuchaman City</div>
-        </a>
+            <div class="location-badge">☕ Shopping made as simple as sending a text (and picking it up down the street)</div>
+        </div>
 
-        <button class="mobile-menu-btn" id="menuToggle" aria-label="Toggle Menu">
-            ☰
-        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">☰</button>
 
-        <nav>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#arrivals">Collection</a></li>
-                <li><a href="#visit">Our Store</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+        <nav class="nav-links" id="navLinks">
+            <a href="#hero">Home</a>
+            <a href="#products">Collection</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
         </nav>
     </header>
 
-    <!-- Hero Banner with Background Image Slider -->
-    <section class="hero">
-        <div class="hero-slider" id="heroSlider">
-            <div class="hero-slide active" style="background-image: url('images/hero1.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('images/hero2.jpg');"></div>
-            <div class="hero-slide" style="background-image: url('images/hero3.jpg');"></div>
-        </div>
-        
-        <div class="hero-overlay"></div>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-slider">
+            <!-- Slide 1 -->
+            <div class="hero-slide active" style="background-image: url('images/hero1.jpg');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>REFINED FASHION, SOURCED FOR KUCHAMAN</h1>
+                    <p>Salwar Suits, Pure Cotton Odhani, Quality Astar, and Premium Thān Fabrics (Nilam, Jorjat, Jam Cotton & more).</p>
+                </div>
+            </div>
 
-        <div class="hero-content">
-            <h1>Refined Fashion, Sourced for Kuchaman</h1>
-            <p>Salwar Suits, Pure Cotton Odhani, Quality Astar, and Premium Thān Fabrics (Nilam, Jorjat, Jam Cotton & more).</p>
-            <div class="cta-group">
-                <a href="#arrivals" class="cta-button">Explore Collection</a>
-                <a href="https://wa.me/917023788508?text=Hi%20Tak%20Cloth%20Store,%20I'd%20like%20to%20inquire%20about%20your%20collection" target="_blank" class="whatsapp-button">Order via WhatsApp</a>
+            <!-- Slide 2 -->
+            <div class="hero-slide" style="background-image: url('images/hero2.jpg');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>NEW ARRIVALS FOR THE SEASON</h1>
+                    <p>Discover handpicked unstitched suit sets and designer cotton dupattas made for elegance.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="hero-slide" style="background-image: url('images/hero3.jpg');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>PREMIUM FABRICS & THAN COLLECTION</h1>
+                    <p>Explore high-grade Nilam, Jorjat, Jam Cotton & more at wholesale prices in Kuchaman.</p>
+                </div>
             </div>
         </div>
 
-        <button class="hero-btn hero-prev" onclick="changeHeroSlide(-1)">❮</button>
-        <button class="hero-btn hero-next" onclick="changeHeroSlide(1)">❯</button>
+        <!-- Navigation Buttons -->
+        <button class="hero-btn hero-prev" id="heroPrevBtn" aria-label="Previous slide">&#10094;</button>
+        <button class="hero-btn hero-next" id="heroNextBtn" aria-label="Next slide">&#10095;</button>
     </section>
 
-    <!-- Product Showcase with Backend Filtering -->
-    <section class="products-section" id="arrivals">
-        <h2 class="section-title">Curated Essentials</h2>
-        <p class="section-subtitle">Select a category to filter stock dynamically from our inventory</p>
-        
+    <!-- Hero CTA Bar -->
+    <div class="hero-cta-bar">
+        <a href="#products" class="cta-button">Explore Collection</a>
+        <a href="https://wa.me/919829000000" class="whatsapp-button" target="_blank">Order via WhatsApp</a>
+    </div>
+
+    <!-- Product Section -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">OUR FABRIC & SUIT SELECTION</h2>
+        <p class="section-subtitle">Curated quality fabrics for every style and occasion</p>
+
         <!-- Category Filter Bar -->
-        <div class="filter-bar" id="filterBar">
-            <button class="filter-btn active" onclick="filterCategory('All', this)">All Items</button>
-            <button class="filter-btn" onclick="filterCategory('Salwar Suit', this)">Salwar Suits</button>
-            <button class="filter-btn" onclick="filterCategory('Odhani', this)">Odhani (ओढ़णी)</button>
-            <button class="filter-btn" onclick="filterCategory('Astar', this)">Astar (अस्तर)</button>
-            <button class="filter-btn" onclick="filterCategory('Raw Fabric (Thān)', this)">Thān Fabric (थान)</button>
-            <button class="filter-btn" onclick="filterCategory('Pant Shirt Fabric', this)">Pant Shirt (पैंत शर्ट)</button>
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All Items</button>
+            <button class="filter-btn" data-filter="suits">Salwar Suits</button>
+            <button class="filter-btn" data-filter="odhani">Cotton Odhani</button>
+            <button class="filter-btn" data-filter="than">Thān Fabrics</button>
+            <button class="filter-btn" data-filter="astar">Quality Astar</button>
         </div>
 
-        <!-- Product Grid Dynamic Display -->
-        <div class="product-grid" id="productGrid">
-            <p style="grid-column: 1/-1; text-align: center;">Loading collection from database...</p>
-        </div>
+        <!-- Dynamic Product Container -->
+        <div class="product-grid" id="productGrid"></div>
     </section>
 
-    <!-- Local Store Section -->
-    <section class="local-info-section" id="visit">
+    <!-- Local Info Section -->
+    <section class="local-info-section" id="about">
         <div class="about-container">
-            <h2>The Tak Curation</h2>
-            <p>At <strong>Tak Cloth Store</strong>, we act as Kuchaman City's personal style curators—handpicking premium fabrics, versatile cuts, and modern essentials.</p>
-            
+            <h2>TAK CLOTH STORE</h2>
+            <p>Your trusted destination for handpicked unstitched suit sets, premium Thān fabrics, fine lining materials, and authentic cotton dupattas right in the heart of Kuchaman City.</p>
             <div class="local-features">
                 <div class="feature-box">
-                    <h4>🚀 Local Speed</h4>
-                    <p>Same-day delivery across Kuchaman City</p>
+                    <h4>💰Affordable Rates</h4>
+                    <p>Unmatched prices on quality fabrics.</p>
                 </div>
                 <div class="feature-box">
-                    <h4>✨ Quality Checked</h4>
-                    <p>Every piece thoroughly inspected</p>
+                    <h4>📦Local Store Pickup</h4>
+                    <p>Visit our outlet in Kuchaman City.</p>
                 </div>
                 <div class="feature-box">
-                    <h4>🔄 Easy Exchange</h4>
-                    <p>Hassle-free local exchange support</p>
+                    <h4>💬WhatsApp Ordering</h4>
+                    <p>Instant support & home delivery options.</p>
                 </div>
             </div>
         </div>
@@ -113,30 +121,36 @@
     <footer class="footer" id="contact">
         <div class="footer-container">
             <div class="footer-col">
-                <div class="brand-title footer-logo">Tak Cloth Store</div>
-                <p>Handpicked Fashion for the Modern Wardrobe.</p>
-                <p style="margin-top:10px;">📍 Near Homeopathy Hospital, Naya Sahar, Kuchaman City, Rajasthan</p>
+                <div class="brand-title footer-logo">TAK</div>
+                <div class="brand-sub footer-sub">Cloth Store</div>
+                <p>📍 Near Homeopathy Hospital,Naya Shahar, Kuchaman City, Rajasthan</p>
             </div>
             <div class="footer-col">
-                <h4>Customer Support</h4>
+                <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">Same-Day Delivery Details</a></li>
-                    <li><a href="#">Local Exchange Policy</a></li>
-                    <li><a href="#">Size & Fit Guide</a></li>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#products">Shop Collection</a></li>
+                    <li><a href="#about">About Our Store</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Connect With Us</h4>
-                <p>Phone / WhatsApp: +91 7023788508</p>
-                <p>Email: takclothstore@gmail.com</p>
+                <h4>Contact Us</h4>
+                <p>📞 Phone/WhatsApp: +91 7023788508</p>
+                <p>📧 E-mail: takclothstore@gmail.com</p>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 Tak Cloth Store. Serving Kuchaman City & Beyond.
+            <p>&copy; 2026 TAK Cloth Store. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- External Script -->
+    <!-- Load Category Data Files First -->
+    <script src="js/data/suits.js"></script>
+    <script src="js/data/odhani.js"></script>
+    <script src="js/data/than.js"></script>
+    <script src="js/data/astar.js"></script>
+
+    <!-- Load Main Logic -->
     <script src="script.js"></script>
 </body>
 </html>
