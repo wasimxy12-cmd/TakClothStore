@@ -1,17 +1,32 @@
 const astarProducts = [
     {
-        id: "astar-1",
+        id: "Cotton",
         category: "astar",
         title: "Superior Fast-Color Cotton Astar",
-        price: "₹45 / Meter",
-        originalPrice: "₹55", // NEW (Optional): Strike-through price
+        price: "₹60 / Meter",
+        originalPrice: "₹70", // NEW (Optional): Strike-through price
         inStock: true,
-        brand: "Nilam",
+        brand: "Cotton Febric",
         badge: "",
-        tags: ["Lining"],
+        tags: [""],
         images: [
             "images/astar/astar1.jpg",
         ]
-    }
+    },
+     {
+        id: "cotton-2",
+        category: "astar",
+        title: "daily use",
+        price: "₹25 / Meter",
+        originalPrice: "₹30", // NEW (Optional): Strike-through price
+        inStock: true,
+        brand: "cotton Febric",
+        badge: "",
+        tags: [""],
+        images: [
+            "images/astar/astar2.jpg",
+        ]
+    },
+
     // Add more Astar lining items here
 ];

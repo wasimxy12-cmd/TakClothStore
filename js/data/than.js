@@ -2,25 +2,25 @@ const thanProducts = [
     {
         id: "than-1",
         category: "than",
-        title: "Premium Plain Jam Cotton Thān",
-        price: "₹180 / Meter",
-        originalPrice: "₹190", // NEW (Optional): Strike-through price
+        title: "Plain Cotton Thān",
+        price: "₹45 / Meter",
+        originalPrice: "₹50", // NEW (Optional): Strike-through price
         inStock: true,
-        brand: "Jam Cotton",
-        badge: "Premium",
+        brand: "Cotton",
+        badge: "",
         tags: ["Thān Material"],
         images: [
-            "images/than/than1.jpg"
+            "images/than/than2.jpg"
         ]
     },
     {
         id: "than-2",
         category: "than",
-        title: "Premium Cotton Thān",
-        price: "₹90 / Meter",
-        originalPrice: "₹120", // NEW (Optional): Strike-through price
+        title: "Jan Cotton Thān",
+        price: "₹75 / Meter",
+        originalPrice: "₹80", // NEW (Optional): Strike-through price
         inStock: true,
-        brand: "Cotton",
+        brand: "Jam Cotton",
         badge: "new arrival",
         tags: ["Thān Material"],
         images: [
@@ -30,15 +30,44 @@ const thanProducts = [
     {
         id: "than-3",
         category: "than",
-        title: "nilam Thān",
-        price: "₹40 / Meter",
+        title: "Neelam Thān",
+        price: "₹50 / Meter",
         originalPrice: "₹60", // NEW (Optional): Strike-through price
-        inStock: false,
-        brand: "nilam",
+        inStock: true,
+        brand: "Neelam",
         badge: "best seller",
+        tags: ["Thān Material"],
+        images: [
+            "images/than/than3.jpg"
+        ]
+    },
+    {
+        id: "than-4",
+        category: "than",
+        title: "Crep Thān",
+        price: "₹30 / Meter",
+        originalPrice: "₹35", // NEW (Optional): Strike-through price
+        inStock: true,
+        brand: "Crep",
+        badge: "",
         tags: ["Thān Material"],
         images: [
             "images/than/than4.jpg"
         ]
-    }
+    },
+    {
+        id: "than-5",
+        category: "Crep than",
+        title: "Crep Thān",
+        price: "₹55 / Meter",
+        originalPrice: "₹60", // NEW (Optional): Strike-through price
+        inStock: true,
+        brand: "Crep",
+        badge: "best seller",
+        tags: ["Thān Material"],
+        images: [
+            "images/than/than5.jpg"
+        ]
+    },
+    
 ];
